@@ -4,7 +4,7 @@ ADD --link https://packages.microsoft.com/config/debian/13/packages-microsoft-pr
 RUN <<HEREDOC
     dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
 
-    apt-get update && apt-get install -y dotnet-sdk-10.0 aspnetcore-runtime-10.0 git ca-certificates curl tzdata wget libmsquic dnsutils iputils-ping
+    apt-get update && apt-get install -y dotnet-sdk-10.0 aspnetcore-runtime-10.0 git ca-certificates curl tzdata wget libicu dnsutils iputils-ping
 
     mkdir -p /etc/dns /opt/technitium/dns /var/log/technitium/dns
 HEREDOC
