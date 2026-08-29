@@ -15,9 +15,7 @@ RUN <<HEREDOC
   mkdir /etc/dns
 HEREDOC
 
-# Project is built outside of Docker, copy over the build directory:
-WORKDIR /opt/technitium/dns
-COPY --link ./DnsServerApp/bin/Release/publish /opt/technitium/dns
+# Project is built outside of Docker, copy over the build directo
 
 ENTRYPOINT ["/usr/bin/dotnet", "/opt/technitium/dns/DnsServerApp.dll"]
 CMD ["/etc/dns"]
