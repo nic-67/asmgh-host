@@ -4,6 +4,17 @@ ADD --link https://packages.microsoft.com/config/debian/13/packages-microsoft-pr
 RUN <<HEREDOC
     dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
 
+    git clone --depth 1 https://github.com/TechnitiumSoftware/TechnitiumLibrary.git TechnitiumLibrary
+    git clone --depth 1 https://github.com/TechnitiumSoftware/DnsServer.git DnsServer
+
+    # Build TechnitiumLibraries
+    dotnet build TechnitiumLibrary/TechnitiumLibrary.ByteTree/TechnitiumLibrary.ByteTree.csproj -c Release
+    dotnet build TechnitiumLibrary/TechnitiumLibrary.Net/TechnitiumLibrary.Net.csproj -c Release
+    dotnet build TechnitiumLibrary/TechnitiumLibrary.Security.OTP/TechnitiumLibrary.Security.OTP.csproj -c Release
+    
+    # Compile DnsServer
+    dotnet publish DnsServer/DnsServerApp/DnsServerApp.csproj -c Release
+
     apt-get update && apt-get install -y libmsquic dnsutils iputils-ping
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
