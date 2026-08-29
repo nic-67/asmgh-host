@@ -15,11 +15,6 @@ RUN <<HEREDOC
   mkdir /etc/dns
 HEREDOC
 
-# Project is built outside of Docker, copy over the build directo
-
-ENTRYPOINT ["/usr/bin/dotnet", "/opt/technitium/dns/DnsServerApp.dll"]
-CMD ["/etc/dns"]
-
 
 ## Only append image metadata below this line:
 EXPOSE \
