@@ -7,17 +7,17 @@ RUN <<HEREDOC
     apt-get update && apt-get install -y libmsquic dnsutils iputils-ping
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
-    mkdir -p /etc/dns /opt/technitium/dns /var/log/technitium/dns && \
-    
-    git clone --depth 1 https://github.com/TechnitiumSoftware/TechnitiumLibrary.git TechnitiumLibrary
-    git clone --depth 1 https://github.com/TechnitiumSoftware/DnsServer.git DnsServer
-
-    dotnet build TechnitiumLibrary/TechnitiumLibrary.ByteTree/TechnitiumLibrary.ByteTree.csproj -c Release
-    dotnet build TechnitiumLibrary/TechnitiumLibrary.Net/TechnitiumLibrary.Net.csproj -c Release
-    dotnet build TechnitiumLibrary/TechnitiumLibrary.Security.OTP/TechnitiumLibrary.Security.OTP.csproj -c Release
-    
-    dotnet publish DnsServer/DnsServerApp/DnsServerApp.csproj -c Release
+    mkdir -p /etc/dns /opt/technitium/dns /var/log/technitium/dns
 HEREDOC
+    
+RUN git clone --depth 1 https://github.com/TechnitiumSoftware/TechnitiumLibrary.git TechnitiumLibrary
+RUN git clone --depth 1 https://github.com/TechnitiumSoftware/DnsServer.git DnsServer
+
+RUN dotnet build TechnitiumLibrary/TechnitiumLibrary.ByteTree/TechnitiumLibrary.ByteTree.csproj -c Release
+RUN dotnet build TechnitiumLibrary/TechnitiumLibrary.Net/TechnitiumLibrary.Net.csproj -c Release
+RUN dotnet build TechnitiumLibrary/TechnitiumLibrary.Security.OTP/TechnitiumLibrary.Security.OTP.csproj -c Release
+    
+RUN dotnet publish DnsServer/DnsServerApp/DnsServerApp.csproj -c Release
 
 WORKDIR /opt/technitium/dns
 
