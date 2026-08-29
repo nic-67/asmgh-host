@@ -25,7 +25,7 @@ RUN <<HEREDOC
 HEREDOC
 
 WORKDIR /opt/technitium/dns
-COPY --link --from=build ./DnsServerApp/bin/Release/publish /opt/technitium/dns
+COPY --link ./DnsServerApp/bin/Release/publish /opt/technitium/dns
 
 ENTRYPOINT ["/usr/bin/dotnet", "/opt/technitium/dns/DnsServerApp.dll"]
 CMD ["/etc/dns"]
