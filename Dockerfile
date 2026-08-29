@@ -8,17 +8,9 @@ RUN <<HEREDOC
 
     mkdir -p /usr/bin /etc/dns /opt/technitium/dns /var/log/technitium/dns
 HEREDOC
-    
-RUN git clone --depth 1 https://github.com/TechnitiumSoftware/TechnitiumLibrary.git TechnitiumLibrary
-RUN git clone --depth 1 https://github.com/TechnitiumSoftware/DnsServer.git DnsServer
-
-RUN dotnet build TechnitiumLibrary/TechnitiumLibrary.ByteTree/TechnitiumLibrary.ByteTree.csproj -c Release
-RUN dotnet build TechnitiumLibrary/TechnitiumLibrary.Net/TechnitiumLibrary.Net.csproj -c Release
-RUN dotnet build TechnitiumLibrary/TechnitiumLibrary.Security.OTP/TechnitiumLibrary.Security.OTP.csproj -c Release
-    
-RUN dotnet publish DnsServer/DnsServerApp/DnsServerApp.csproj -c Release
 
 WORKDIR /opt/technitium/dns
+COPY --link ./DnsServerApp/bin/Release/publish /opt/technitium/dns
 
 ENTRYPOINT ["/usr/bin/dotnet", "/opt/technitium/dns/DnsServerApp.dll"]
 CMD ["/etc/dns"]
