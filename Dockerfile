@@ -1,6 +1,9 @@
-FROM mcr.microsoft.com/dotnet/aspnet:10.0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS build
+
 WORKDIR /
+
 ADD --link https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb /
+
 RUN <<HEREDOC
     dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
 
@@ -22,7 +25,7 @@ RUN <<HEREDOC
 HEREDOC
 
 WORKDIR /opt/technitium/dns
-COPY --link ./DnsServerApp/bin/Release/publish /opt/technitium/dns
+COPY --link --from=build ./DnsServerApp/bin/Release/publish /opt/technitium/dns
 
 ENTRYPOINT ["/usr/bin/dotnet", "/opt/technitium/dns/DnsServerApp.dll"]
 CMD ["/etc/dns"]
