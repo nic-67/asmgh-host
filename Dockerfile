@@ -31,7 +31,4 @@ EXPOSE \
   # DHCP
   67/udp
 
-LABEL org.opencontainers.image.title="Fork of Technitium DNS Server"
-LABEL org.opencontainers.image.vendor="Asmgh-Host"
-LABEL org.opencontainers.image.url="https://asmgh-host.onrender.com/"
-LABEL org.opencontainers.image.authors="root-67@lavache.com"
+
