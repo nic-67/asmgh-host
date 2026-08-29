@@ -6,7 +6,7 @@ RUN <<HEREDOC
 
     apt-get update && apt-get install -y dotnet-sdk-10.0 aspnetcore-runtime-10.0 git ca-certificates curl tzdata wget libmsquic dnsutils iputils-ping
 
-    mkdir -p /etc/dns /opt/technitium/dns /var/log/technitium/dns
+    mkdir -p /usr/bin /etc/dns /opt/technitium/dns /var/log/technitium/dns
 HEREDOC
     
 RUN git clone --depth 1 https://github.com/TechnitiumSoftware/TechnitiumLibrary.git TechnitiumLibrary
