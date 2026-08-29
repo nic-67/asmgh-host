@@ -5,7 +5,6 @@ RUN <<HEREDOC
     dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
 
     apt-get update && apt-get install -y git ca-certificates curl tzdata wget libmsquic dnsutils iputils-ping
-    apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
     mkdir -p /etc/dns /opt/technitium/dns /var/log/technitium/dns
 HEREDOC
