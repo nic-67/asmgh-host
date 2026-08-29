@@ -1,27 +1,22 @@
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 
-WORKDIR /
-
 ADD --link https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb /
-
 RUN <<HEREDOC
     dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
-
-    git clone --depth 1 https://github.com/TechnitiumSoftware/TechnitiumLibrary.git TechnitiumLibrary
-    git clone --depth 1 https://github.com/TechnitiumSoftware/DnsServer.git DnsServer
-
-    # Build TechnitiumLibraries
-    dotnet build TechnitiumLibrary/TechnitiumLibrary.ByteTree/TechnitiumLibrary.ByteTree.csproj -c Release
-    dotnet build TechnitiumLibrary/TechnitiumLibrary.Net/TechnitiumLibrary.Net.csproj -c Release
-    dotnet build TechnitiumLibrary/TechnitiumLibrary.Security.OTP/TechnitiumLibrary.Security.OTP.csproj -c Release
-    
-    # Compile DnsServer
-    dotnet publish DnsServer/DnsServerApp/DnsServerApp.csproj -c Release
 
     apt-get update && apt-get install -y libmsquic dnsutils iputils-ping
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
-    mkdir /etc/dns
+    mkdir -p /etc/dns /opt/technitium/dns /var/log/technitium/dns && \
+    
+    git clone --depth 1 https://github.com/TechnitiumSoftware/TechnitiumLibrary.git TechnitiumLibrary
+    git clone --depth 1 https://github.com/TechnitiumSoftware/DnsServer.git DnsServer
+
+    dotnet build TechnitiumLibrary/TechnitiumLibrary.ByteTree/TechnitiumLibrary.ByteTree.csproj -c Release
+    dotnet build TechnitiumLibrary/TechnitiumLibrary.Net/TechnitiumLibrary.Net.csproj -c Release
+    dotnet build TechnitiumLibrary/TechnitiumLibrary.Security.OTP/TechnitiumLibrary.Security.OTP.csproj -c Release
+    
+    dotnet publish DnsServer/DnsServerApp/DnsServerApp.csproj -c Release
 HEREDOC
 
 WORKDIR /opt/technitium/dns
